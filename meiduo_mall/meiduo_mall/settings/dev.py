@@ -10,11 +10,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
-import os
+import os, sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# 追加系统导包路径
+sys.path.append(os.path.join(BASE_DIR, 'apps'))
+
+# print(sys.path)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -39,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',   # DRF
+
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
@@ -51,7 +57,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'mall_project.urls'
+ROOT_URLCONF = 'meiduo_mall.urls'
 
 TEMPLATES = [
     {
@@ -69,7 +75,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'mall_project.wsgi.application'
+WSGI_APPLICATION = 'meiduo_mall.wsgi.application'
 
 
 # Database
@@ -82,7 +88,7 @@ DATABASES = {
         'PORT': '3306',
         'USER': 'root',
         'PASSWORD': 'mysql',
-        'NAME': 'mall_project',
+        'NAME': 'meiduo_mall',
     }
 }
 
@@ -192,6 +198,11 @@ import sys
 
 REST_FRAMEWORK = {
     # 异常处理
-    'EXCEPTION_HANDLER': 'mall_project.utils.exceptions.exceptions_handler',
+    'EXCEPTION_HANDLER': 'meiduo_mall.utils.exceptions.exceptions_handler',
 
 }
+
+# 更改用户模型类
+# String model references must be of the form 'app_label.ModelName 报错只能指定路径为
+# 应用名. 模型类名
+AUTH_USER_MODEL = 'users.User'
